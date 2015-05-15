@@ -1,89 +1,515 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+<html lang="en">
 
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>AppAudit</title>
+    <link href="dependencies/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/landing-page.css" rel="stylesheet">
+    <link href="css/report.css" rel="stylesheet">
+    <link href="css/myshape.css" rel="stylesheet">
+    <link href="css/bs-callout.css" rel="stylesheet">
+    <link href="dependencies/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="dependencies/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-61168812-1', 'auto');
+    ga('send', 'pageview');
+
+    </script>
+    <!-- End Google Analytics -->
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <title>AppAudit by mingyuan-xia</title>
-  </head>
+</head>
 
-  <body>
-    <header>
-      <div class="inner">
-        <h1>AppAudit</h1>
-        <h2>Auditing behaviour of Android Apps</h2>
-        <a href="https://github.com/mingyuan-xia/AppAudit" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
+<body>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h3>
-<a id="welcome-to-appaudit-developers-page" class="anchor" href="#welcome-to-appaudit-developers-page" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to AppAudit Developer's Page.</h3>
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand topnav" href="#">AppAudit</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="https://github.com/mingyuan-xia/AppAudit">Developers</a>
+                    </li>
+                    <li>
+                        <a href="research.html">Research</a>
+                    </li>
+                    <li>
+                        <a href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
 
-<p>AppAudit is a graduated research project, which intended to check the behaviours of an Android application.
-By behaviours, we mean "if the app will disseminate personal data to a third-party server?" or "what URLs the app will touch once the user clicks on a particular button".
-AppAudit is a general framework where behaviours can be customized and plugged into AppAudit.</p>
 
-<p>Apart from the program analysis flavour, AppAudit is also intended for web integration.
-AppAudit could generate a detailed JSON report for examining the app, which could be beautified by the web frontend.
-We are open to the ideas for integrating AppAudit for various use cases.</p>
+    <!-- Header -->
+    <a name="about"></a>
+    <div class="intro-header">
+        <div class="container">
 
-<h3>
-<a id="what-can-appaudit-do" class="anchor" href="#what-can-appaudit-do" aria-hidden="true"><span class="octicon octicon-link"></span></a>What can AppAudit do?</h3>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-message">
+                        <h2>AppAudit: Uncover Hidden Data Leaks in Apps</h2>
+                        <hr class="intro-divider">
+                        <p></p>
+                        <input type="file" id="apkpath" class="hidden">
+                        <div class="btn-group btn-group-lg">
+                          <div class="btn-group" role="group">
+                            <a class="btn btn-default btn-lg"><i class="fa fa-file-o"></i></a>
+                          </div>
+                          <div class="btn-group" role="group">
+                            <a class="btn btn-info btn-lg" id="apkupload">Select and scan an Android apk file</a>
+                          </div>
+                          <div class="btn-group" role="group">
+                            <a class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#"><i class="fa fa-link"></i> Scan a Google Play URL (available soon)</a></li>
+                            </ul>
+                          </div>
+                        </div><!-- /btn-group -->
+                        <br>
+                        <div class="row text-center" id="upload-details">
+                            <div class="col-lg-3 text-left col-lg-offset-4">
+                                <h4>Notification options:</h4>
+                                <div class="checkbox">
+                                    <input type="checkbox" id="noti-display" checked>
+                                    <label for="noti-display">
+                                        <i class="fa fa-eye"></i> Display on the page
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <input type="checkbox" id="noti-email">
+                                    <label for="noti-email">
+                                        <i class="fa fa-envelope-o"></i> Email me when it is finished
+                                    </label>
+                                </div>
+                                <div class="input-group">
+                                  <input type="text" class="form-control" placeholder="Email address" id="noti-email-text">
+                                  <span class="input-group-btn">
+                                    <a class="btn btn-primary">Ok!</a>
+                                  </span>
+                                </div><!-- /input-group -->
+                                <div class="checkbox">
+                                    <input type="checkbox" id="noti-desktop-noti">
+                                    <label for="noti-desktop-noti">
+                                        <i class="fa fa-bell"></i> Desktop notification
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-2" id="progress-bar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<p>AppAudit is a program analysis tool to detect data leaks in mobile applications. Data leaks refer to the cases where sensitive user data (e.g. SMS, call log, location) is sent out of the device, to some remote servers. AppAudit features high detection accuracy and low analysis time. AppAudit can run on desktops, servers and Android devices.</p>
+        </div>
+        <!-- /.container -->
 
-<p>If you are interested in the framework itself, please check out our <a href="">paper</a>.</p>
+    </div>
+    <!-- /.intro-header -->
 
-<h3>
-<a id="ideas" class="anchor" href="#ideas" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ideas?</h3>
+    <!-- Page Content -->
+    <div class="modal fade" id="report-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Scan report</h4>
+          </div>
+          <div class="modal-body">
+            <div id="upload-scan"></div>
+          </div>
+          <div class="modal-footer">
+            <div class="btn-group btn-group-lg">
+              <div class="btn-group" role="group">
+                <a class="btn btn-default"><i class="fa fa-envelope-o"></i></a>
+              </div>
+              <div class="btn-group" role="group">
+                <a class="btn btn-default"><i class="fa fa-facebook"></i></a>
+              </div>
+              <div class="btn-group" role="group">
+                <a class="btn btn-default"><i class="fa fa-twitter"></i></a>
+              </div>
+              <div class="btn-group" role="group">
+                <a class="btn btn-default"><i class="fa fa-linkedin"></i></a>
+              </div>
+            </div>
+            <a class="btn btn-primary" data-dismiss="modal">Close</a>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
-<p>We are very open to any ideas that could make AppAudit more useful. On our side, we are working out an mobile version to run AppAudit directly on Android boxes. Web services will come out soon. And we appreciate your imagination!</p>
+	<a  name="services"></a>
+    <div class="content-section-b" id="upload">
 
-<h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+        <div class="container">
+            <div class="clearfix"></div>
+            <h2 class="section-heading"><i class="fa fa-bomb"></i> Top  threats from app markets - stay alerted!</h2>
+            <div class="row">
+                <div id="threats0" class="col-md-4"></div>
+                <div id="threats1" class="col-md-4"></div>
+                <div id="threats2" class="col-md-4"></div>
+            </div>
+        </div>
+        <!-- /.container -->
 
-<p>You can get to me <a href="https://github.com/mingyuan-xia" class="user-mention">@mingyuan-xia</a>. <a href="https://github.com/iceboy-sjtu" class="user-mention">@iceboy-sjtu</a> and <a href="https://github.com/bblsummer" class="user-mention">@bblsummer</a> might also answer questions and talk about me with you.</p>
-        </section>
+    </div>
+    <!-- /.content-section-a -->
 
-        <aside id="sidebar">
-          <a href="https://github.com/mingyuan-xia/AppAudit/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/mingyuan-xia/AppAudit/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
-
-          <p class="repo-owner"><a href="https://github.com/mingyuan-xia/AppAudit"></a> is maintained by <a href="https://github.com/mingyuan-xia">mingyuan-xia</a>.</p>
-
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+    <div class="content-section-a" id="headline">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-lg-offset-1 col-sm-push-6 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading"><i class="fa fa-line-chart"></i> App threat headlines</h2>
+                    <p class="lead">AppAudit operates a huge scan network that intercepts latest app threats and keeps our users protected.</p>
+                </div>
+                <div class="col-lg-5 col-sm-pull-6  col-sm-6 text-center">
+                    <div id="stats-tab" class="btn-group" role="group" aria-label="...">
+                    </div>
+                    <canvas id="stats-chart" height="200px" width="550px"></canvas>
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
     </div>
 
-            <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
-            try {
-              var pageTracker = _gat._getTracker("UA-61168812-1");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
+    <!-- /.content-section-b -->
+    <div class="content-section-b" id="ourapp">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">Upcoming: AppAudit Mobile</h2>
+                    <p class="lead">AppAudit mobile protects users from potential app threats, including malware, data-leaking apps and fake apps.</p>
+                </div>
+                <div class="col-lg-5 col-lg-offset-1 col-sm-6 text-center">
+                    <img class="img-responsive" src="img/phone.png" />
+                    <img id="myarrow" src="img/arrow.png" />
+                </div>
+            </div>
+        </div>
+    <!-- /.content-section-a -->
+    </div>
 
-  </body>
+	<a  name="contact"></a>
+    <div class="banner">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-3 text-center">
+                    <h2>Contact AppAudit:</h2>
+                </div>
+                <div class="col-lg-3 text-center">
+                    <i class="fa fa-flask fa-4x"></i>
+                    <h3>New ideas?</h3>
+                    <a href="mailto:dev@appaudit.io">dev@appaudit.io</a>
+                </div>
+                <div class="col-lg-3 text-center">
+                    <i class="fa fa-lightbulb-o fa-4x"></i>
+                    <h3>Have a need?</h3>
+                    <a href="mailto:dev@appaudit.io">marketing@appaudit.io</a>
+                </div>
+                <div class="col-lg-3 text-center">
+                    <i class="fa fa-share-alt fa-4x"></i>
+                    <h3>Follow AppAudit</h3>
+                    <a href="https://twitter.com/appauditio" class="btn btn-default"><i class="fa fa-twitter fa-2x"></i></a>
+                    <a href="https://github.com/mingyuan-xia/AppAudit" class="btn btn-default"><i class="fa fa-github fa-2x"></i></a>
+                    <a href="#" class="btn btn-default"><i class="fa fa-linkedin fa-2x"></i></a>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.banner -->
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-inline">
+                        <li>
+                            <a href="terms.html">Terms of Service</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                            <a href="privacy.html">Privacy Policy</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                            <a href="mailto:info@appaudit.io">Contact</a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted small">Copyright &copy; AppAudit 2015. All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="dependencies/jquery/dist/jquery.min.js"></script>
+    <script src="dependencies/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="dependencies/bootstrap-rating-input/build/bootstrap-rating-input.min.js" type="text/javascript"></script>
+    <script src="dependencies/Chart.js/Chart.min.js"></script>
+    <script src="dependencies/jsrender/jsrender.min.js"></script>
+    <script src="dependencies/notify/notification.js"></script>
+    <script src="dependencies/jquery.cookie/jquery.cookie.js"></script>
+    <script src="dependencies/progressbar.js/dist/progressbar.min.js"></script>
+    <script src="js/desktop-notify-min.js"></script>
+    <script src="js/frontend.js"></script>
+    <script src="js/sha1.js"></script>
+    <script>
+    var server_prefix = "http://cpslab.cs.mcgill.ca:5902/";
+    Array.prototype.shuffle = function() {
+        for (var i = this.length - 1; i > 0; --i) {
+            var j = Math.floor(Math.random() * (i+1));
+            var t = this[i];
+            this[i] = this[j];
+            this[j] = t;
+        }
+    }
+    var render_examples = function(threats) {
+        var tmpl = $.render.content_tmpl;
+        $.get(server_prefix+'api/report/show?sha1=' + threats[0], function (data) {
+            renderData(data, $('#threats0'), tmpl);
+        });
+        $.get(server_prefix+'api/report/show?sha1=' + threats[1], function (data) {
+            renderData(data, $('#threats1'), tmpl);
+        });
+        $.get(server_prefix+'api/report/show?sha1=' + threats[2], function (data) {
+            renderData(data, $('#threats2'), tmpl);
+        });
+    }
+    var render_stats = function(stats) {
+        render_examples(stats.threats);
+        $('#stats-tab').empty();
+        for (var p in stats.plots) {
+            var a = document.createElement('a');
+            $(a).addClass('btn');
+            $(a).addClass('btn-default');
+            $(a).text(p);
+            jQuery.data(a, 'chart', stats.plots[p]);
+            $(a).appendTo($('#stats-tab'));
+            $(a).click(function () {
+                var last = $('#stats-tab a.btn-primary');
+                last.removeClass('btn-primary');
+                last.addClass('btn-default');
+                $(this).addClass('btn-primary');
+                var ctx = $("#stats-chart").get(0).getContext("2d");
+                var data = $(this).data('chart');
+                var myLineChart = new Chart(ctx).Line(data);
+            });
+        }
+        $('#stats-tab a:first').click();
+    }
+    var upload_file = function (f) {
+        var fd = new FormData();
+        fd.append('apk', f);
+        $.ajax({
+            url: server_prefix+'api/upload',
+            type: 'POST',
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                console.log('upload success');
+                console.log(res);
+            },
+            error: function (jqXHR, textStatus, err) {
+                console.log('upload failed');
+                console.log(err);
+            }
+        });
+    }
+    var popup_report = function(report) {
+        $('#report-modal').modal();
+        var tmpl = $.render.content_tmpl;
+        $('#upload-scan').empty();
+        renderData(report, $('#upload-scan'), tmpl);
+    }
+    var generate_notification = function(psha1) {
+        $.get(server_prefix+'api/report/find?psha1=' + psha1, function (data) {
+            if ($('#noti-display').is(':checked')) {
+                popup_report(data);
+            }
+            // email notification will be taken care of by the server
+            if ($('#noti-desktop-noti').is(':checked')) {
+                n = new Notification("Scan report ready", {
+                    body: "" // TODO
+                });
+            }
+        });
+    }
+    var track_progress = function(psha1) {
+        $('#progress-bar').empty();
+        var progress_bar = new ProgressBar.Circle('#progress-bar', {
+            color: '#99CCFF',
+            strokeWidth: 5,
+            trailWidth: 3,
+            duration: 900,
+            text: {
+                value: '0%'
+            },
+            step: function(state, bar) {
+                bar.setText((bar.value() * 100).toFixed(0) + '%');
+            }
+        });
+        var get_noti_opts = function(psha1) {
+            var noti = {psha1: psha1};
+            if ($('#noti-email').is(':checked')) {
+                noti.email = $('#noti-email-text').val();
+            }
+            return noti;
+        }
+        var progress = 0;
+        var ticking = [];
+        for (var i = 0; i < 15; ++i) {
+            // 0.4*e^(-0.15x-1 + r(0.05))
+            ticking[i] = 0.4 * Math.exp(-0.15*(i+1)-1+Math.random()*0.05);
+        }
+        ticking.shuffle();
+        var poll_progress = function() {
+            $.get(server_prefix+'api/report/progress?psha1=' + psha1, function (msg) {
+                var psha1 = msg.psha1;
+                if (ticking.length > 0) {
+                    progress += ticking.pop();
+                } else {
+                    if (progress < 0.98) {
+                        progress += 0.01;
+                    }
+                }
+                progress_bar.animate(progress, {
+                    easing: "easeInOutQuad"
+                });
+                if (msg.progress < 100) {
+                    setTimeout(poll_progress, 1000);
+                } else {
+                    progress_bar.animate(1, {
+                        easing: "easeInOutQuad"
+                    }, function() {
+                        var o = $('#progress-bar > .progressbar-text');
+                        o.html('<a href="javascript: generate_notification(\'' + psha1 +'\')">View Report</a>');
+                        o.css('font-size', '2.5rem');
+                        o.css('white-space', 'nowrap');
+                        o.css('top', '45%');
+                    });
+                    generate_notification(psha1);
+                }
+            });
+        }
+        poll_progress();
+        $('#upload-details').css('visibility', 'visible');
+    }
+    var query_file = function() {
+        var rawf = document.getElementById('apkpath').files[0];
+        if (!rawf) 
+            return ;
+        var f = rawf.slice(0, 4096);
+        var reader = new FileReader();
+        reader.onloadend = function (e) {
+            var content = e.target.result;
+            var hash = sha1.hash(content);
+            $.get(server_prefix+'api/report/find?attempt=1&psha1=' + hash, function (data) {
+                if (JSON.stringify(data) !== '{}') {
+                    track_progress(hash);
+                    // popup_report(data);
+                } else {
+                    alert('upload temp disabled');
+                    // upload_file(rawf);
+                }
+            });
+        }
+        reader.readAsArrayBuffer(f);
+    }
+    var load_preferences = function() {
+        // load notification options
+        var n = $.cookie('noti');
+        if ('emailaddr' in n) $('#noti-email-text').val(n.emailaddr);
+        if ('display' in n) $('#noti-display').val(n['display']);
+        if ('email' in n) $('#noti-email').val(n['email']);
+        if ('desktop' in n) $('#noti-desktop-noti').val(n['desktop']);
+    }
+    $(document).ready(function() {
+        $.get('js/report-tmpl', function (tmplData) {
+            // load_preferences();
+            $.templates({content_tmpl: tmplData});
+            $.get(server_prefix+'api/stats', render_stats);
+            $('#apkupload').click(function (e) {
+                $('input[id=apkpath]').click()
+            });
+            $('input[id=apkpath]').change(query_file);
+            $('#noti-email').change(function (e) {
+                var b = $(this).is(':checked');
+                console.log(b);
+                $('#noti-email-text').prop('readonly', !b);
+            });
+            $('#noti-desktop-noti').change(function (e) {
+                if ($(this).is(':checked')) {
+                    // request desktop notification permission
+                    if (Notification.permission !== 'granted') {
+                        Notification.requestPermission();
+                    }
+                }
+            });
+        });
+        $("#myarrow").hide();
+        /*
+        var animate1 = function() {
+            $("#myarrow").animate({
+                left: "+=40",
+                top: "+=10"
+            }, 1000, function() {
+                $("#myarrow").animate({
+                    left: "-=40",
+                    top: "-=10"
+                }, 300, animate1);
+            });
+        }
+        animate1();
+        */
+    });
+    </script>
+</body>
+
 </html>

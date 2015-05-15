@@ -1,0 +1,12 @@
+.my-chevron {
+  background: url('../img/c3.png') no-repeat center center;
+  background-size: 100% 100%;
+}
+
+.divider-vertical {
+    height: 100px;                   // any height
+    border-left: 1px solid gray;     // right or left is the same
+    float: left;                     // so BS grid doesn't break
+    opacity: 0.5;                    // optional
+    margin: 0 15px;                  // optional
+}

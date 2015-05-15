@@ -1,0 +1,60 @@
+<div class="report">
+  <div class="row">
+    <div class="col-md-4 col-xs-4">
+      <img class="img-responsive" src="{{:icon_img}}" />
+      <p></p>
+      <div class="text-center">
+        {{for tags}}
+        <span class="label {{:type}}" data-toggle="tooltip" data-placement="top" data-original-title="{{:tooltip}}"><i class="fa {{:icon}}"></i> {{:text}}</span>
+        <span>  </span>
+        {{/for}}
+      </div>
+    </div>
+    <div class="col-md-8 col-xs-8">
+      <h4 class="app-name {{:app_type}}"></i> {{:app_name}}</h4>
+      <p></p>
+      <p class="text-muted">{{:pkg_name}}<br>version: {{:app_ver}}</p>
+    </div>
+  </div>
+  {{if rating_score}}
+  <hr>
+  <div class="row">
+    <div class="col-md-4 col-xs-4 text-center">
+      <b>GooglePlay Rating:</b>
+      <h2 class="score">{{:rating_score}}</h2>
+    </div>
+    <div class="col-md-8 col-xs-8">
+      <p></p>
+      <div class="col-md-6 col-xs-6 text-left" style="color: #88b131;">
+        5 <i class="fa fa-star"></i>
+      </div>
+      <div class="col-md-6 col-xs-6 text-right" style="color: #ff6f31;">
+        1 <i class="fa fa-star"></i>
+      </div>
+      <div class="col-md-12 col-xs-12">
+      <div class="progress">
+        {{for ratings}}
+        <div class="progress-bar" style="width: {{:percent}}; background-color: {{:color}};" data-toggle="tooltip" data-placement="top" data-original-title="{{:tooltip}}">
+          <span class="sr-only" ></span>
+        </div>
+        {{/for}}
+      </div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+  <div class="clearfix"></div>
+  {{for items}}
+  <div class="bs-callout {{:type}}">
+    <h4>
+      <i class="fa {{:icon}}"></i>
+      <b>{{:text}}</b>
+    </h4>
+    <p>
+    {{for points}}
+    {{:#data}}
+    {{/for}}
+    </p>
+  </div>
+  {{/for}}
+</div>

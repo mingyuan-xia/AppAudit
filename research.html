@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>AppAudit</title>
+	<link href="https://fonts.googleapis.com/css?family=Architects+Daughter" rel="stylesheet" type="text/css">
+    <link href="dependencies/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="dependencies/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	<style>
+	body {
+	  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+	  font-size: 2rem;
+	}
+	</style>
+	<!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-61168812-1', 'auto');
+    ga('send', 'pageview');
+
+    </script>
+    <!-- End Google Analytics -->
+</head>
+<body>
+<div class="container">
+	<h1>
+		<a href="http://appaudit.io"><i class="fa fa-chevron-circle-left"></i></a>
+		AppAudit: Effective Real-time Android Application Auditing
+	</h1>
+	<hr>
+	<p>
+	This project graduates from the joint collaboration of <a href="http://cpslab.cs.mcgill.ca">Cyber-Physical Systems Lab</a> at McGill University and <a href="http://tcloud.sjtu.edu.cn">Trusted Cloud Group</a> at Shanghai Jiao Tong University. Some of the core techniques are results from two-year continued research efforts on improving the precision and efficiency of app auditing tools. This work is concluded in part in a paper published at <a href="http://www.ieee-security.org/TC/SP2015/">the IEEE Security and Privacy Symposium 2015</a>. Since then, we have been working on making our research outcome useful to market operators, mobile users, and mobile developers. And <a href="http://appaudit.io">appaudit.io</a>, which is named after the tool we proposed in the paper, starts to service the general public and provide scanning services to reveal security related problems in real applications.
+	</p>
+	<p>
+	From the research perspective, we propose to use the synergy of static and dynamic analysis to overcome the shortcomings of each individual analysis. We also propose a new dynamic program analysis technique, namely approximated execution to greatly reduce the memory consumption and analysis time for real apps. These two innovations allow us to quickly scan an app and find potential data leaks precisely. Benefited from these technical advantages, <a href="http://appaudit.io">appaudit.io</a> is capable of processing a large number of apps every day backed by just a few servers. If you are interested in program analysis or research in general, please take a look at our paper and feel free to contact me (<a href="mailto:mingyuan.xia@mail.mcgill.ca">mingyuan.xia@mail.mcgill.ca</a>) for any questions.
+	</p>
+	<hr>
+	<div class="row">
+		<div class="col-md-6 col-xs-12">
+			<p><i class="fa fa-file-text-o"></i> Paper link: <a href="">click here (IEEE)</a></p>
+			<p><i class="fa fa-underline"></i> Bibtex for citations:</p>
+
+			<pre>
+@inproceedings{appaudit,
+ author = {Mingyuan Xia and Lu Gong and Yuanhao Lyu and Zhengwei Qi and Xue Liu},
+ title = {Effective Real-time Android Application Auditing},
+ booktitle = {Proceedings of the 2015 IEEE Symposium on Security and Privacy},
+ series = {SP '15},
+ year = {2015},
+ publisher = {IEEE Computer Society},
+} 
+			</pre>
+		</div>
+		<div class="col-md-6 col-xs-12">
+			<img src="img/appaudit-paper.png" class="img-responsive"></img>
+		</div>
+	</div>
+
+</div>
+    <script src="dependencies/jquery/dist/jquery.min.js"></script>
+    <script src="dependencies/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery.js" type="text/javascript"></script>
+	<script src="../../jsrender.js" type="text/javascript"></script>
+	<link href="../resources/demos.css" rel="stylesheet" type="text/css" />
+
+	<link href="../resources/movielist.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<script id="movieTemplate" type="text/x-jsrender">
+  <tr>
+    <td>
+      {{fntag}}{{>title}}{{/fntag}}
+    </td>
+    <td>
+      {{fntag tmpl="#wrappedTmpl"/}}
+    </td>
+    <td>
+      {{tmpltag}}{{>title}}{{/tmpltag}}
+    </td>
+    <td>
+      {{tmpltag template="#wrappedTmpl"/}}
+    </td>
+    <td>
+      {{sort languages reverse=true}}
+        <div>
+          <b>{{>name}}</b>
+        </div>
+      {{/sort}}
+    </td>
+    <td>{{sort languages tmpl="#sortedTmpl"/}}</td>
+  </tr>
+</script>
+
+<script id="sortedTmpl" type="text/x-jsrender">
+  <div>{{>name}}</div>
+</script>
+<script id="wrappedTmpl" type="text/x-jsrender">{{>title}}</script>
+
+<table>
+  <thead><tr>
+  <th>Render method wrapping content</th>
+  <th>Render method with external content</th>
+  <th>Tag template wrapping content</th>
+  <th>Tag template with external content</th>
+  <th>Sort tag: Reverse order</th>
+  <th>Sort tag: Languages (external content)</th></tr></thead>
+  <tbody id="movieList"></tbody>
+</table>
+
+<script>
+$.views.tags({
+
+  // Tag with a render method to return HTML content,
+  // including data, and the rendered inline content
+  fntag: function() {
+    return "Title:<br/><b>" +
+      this.tagCtx.render() +
+      "</b>.<br/>" +
+      this.tagCtx.view.data.languages.length +
+      "&nbsp;languages.";
+  },
+
+  // Tag with no render method. Just a template to
+  // render HTML content including data, and the
+  // rendered inline content.
+
+  // To use as a self-closing tag, with an external
+  // template, use named "template" property.
+  tmpltag: {
+    template: "Title:<br/><b>" +
+      "{{include " +
+          // block content
+            "tmpl=#content" +
+          // or external content
+            "||~tag.tagCtx.props.template/}}" +
+      "</b>.<br/>{{:languages.length}}&nbsp;languages."
+  },
+
+  // Tag with render method to reverse-sort an array
+  sort: function(array){
+    var ret = "";
+    if (this.tagCtx.props.reverse) {
+      // Render in reverse order
+      for (var i = array.length; i; i--) {
+        ret += this.tagCtx.render(array[i - 1]);
+      }
+    } else {
+      // Render in original order
+      ret += this.tagCtx.render(array);
+    }
+    return ret;
+  }
+
+});
+
+var movies = [
+  {
+    title: "Meet Joe Black",
+    languages: [
+      { name: "English" },
+      { name: "French" }
+    ]
+  },
+  {
+    title: "Eyes Wide Shut",
+    languages: [
+      { name: "French" },
+      { name: "German" },
+      { name: "Spanish" }
+    ]
+  }
+];
+
+$("#movieList").html(
+  $("#movieTemplate").render(movies)
+);
+
+</script>
+
+</body>
+</html>
