@@ -104,7 +104,7 @@
                         </div><!-- /btn-group -->
                         <br>
                         <div class="row text-center" id="upload-details">
-                            <div class="col-lg-3 text-left col-lg-offset-4">
+                            <div id="noti-opts" class="col-lg-3 text-left col-lg-offset-4">
                                 <h4>Notification options:</h4>
                                 <div class="checkbox">
                                     <input type="checkbox" id="noti-display" checked>
@@ -198,7 +198,7 @@
                 <div class="col-lg-5 col-lg-offset-1 col-sm-push-6 col-sm-6">
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
-                    <h2 class="section-heading"><i class="fa fa-line-chart"></i> App threat headlines</h2>
+                    <h2 class="section-heading"><i class="fa fa-line-chart"></i> AppAudit daily new scans</h2>
                     <p class="lead">AppAudit operates a huge scan network that intercepts latest app threats and keeps our users protected.</p>
                 </div>
                 <div class="col-lg-5 col-sm-pull-6  col-sm-6 text-center">
@@ -310,6 +310,7 @@
         }
     }
     var render_examples = function(threats) {
+        threats.shuffle();
         var tmpl = $.render.content_tmpl;
         $.get(server_prefix+'api/report/show?sha1=' + threats[0], function (data) {
             renderData(data, $('#threats0'), tmpl);
@@ -405,8 +406,8 @@
         var progress = 0;
         var ticking = [];
         for (var i = 0; i < 15; ++i) {
-            // 0.4*e^(-0.15x-1 + r(0.05))
-            ticking[i] = 0.4 * Math.exp(-0.15*(i+1)-1+Math.random()*0.05);
+            // 0.4*e^(-0.15x-1)
+            ticking[i] = 0.4 * Math.exp(-0.15*(i+1)-1);
         }
         ticking.shuffle();
         var poll_progress = function() {
@@ -431,7 +432,8 @@
                         var o = $('#progress-bar > .progressbar-text');
                         o.html('<a href="javascript: generate_notification(\'' + psha1 +'\')">View Report</a>');
                         o.css('font-size', '2.5rem');
-                        o.css('white-space', 'nowrap');
+                        // o.css('white-space', 'nowrap');
+                        o.css('color', 'white');
                         o.css('top', '45%');
                     });
                     generate_notification(psha1);
@@ -440,6 +442,7 @@
         }
         poll_progress();
         $('#upload-details').css('visibility', 'visible');
+        $('#noti-opts').css('visibility', 'hidden');
     }
     var query_file = function() {
         var rawf = document.getElementById('apkpath').files[0];
@@ -452,11 +455,10 @@
             var hash = sha1.hash(content);
             $.get(server_prefix+'api/report/find?attempt=1&psha1=' + hash, function (data) {
                 if (JSON.stringify(data) !== '{}') {
-                    track_progress(hash);
-                    // popup_report(data);
+                    popup_report(data);
                 } else {
-                    alert('upload temp disabled');
-                    // upload_file(rawf);
+                    track_progress(hash);
+                    upload_file(rawf);
                 }
             });
         }
@@ -481,7 +483,6 @@
             $('input[id=apkpath]').change(query_file);
             $('#noti-email').change(function (e) {
                 var b = $(this).is(':checked');
-                console.log(b);
                 $('#noti-email-text').prop('readonly', !b);
             });
             $('#noti-desktop-noti').change(function (e) {
