@@ -185,3 +185,8 @@ p.copyright {
     top: 20%;
     width: 40%;
 }
+
+canvas {
+    width: 90%;
+    height: auto;
+}

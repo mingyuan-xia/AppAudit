@@ -12,8 +12,8 @@
     </div>
     <div class="col-md-8 col-xs-8">
       <h4 class="app-name {{:app_type}}"></i> {{:app_name}}</h4>
-      <p></p>
-      <p class="text-muted">{{:pkg_name}}<br>version: {{:app_ver}}</p>
+      <p class="text-muted pkg_name">{{:pkg_name}}</p>
+      <p class="text-muted version_code">version: {{:app_ver}}</p>
     </div>
   </div>
   {{if rating_score}}

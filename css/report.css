@@ -6,7 +6,11 @@
 	border-radius: 5px;
 	color: black;
 	background-color: white;
-	text-align: left; 
+	text-align: left;
+}
+
+.report .pkg_name {
+	word-break: break-all;
 }
 
 .report .apptype {

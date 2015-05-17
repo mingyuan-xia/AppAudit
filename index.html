@@ -75,7 +75,6 @@
         <!-- /.container -->
     </nav>
 
-
     <!-- Header -->
     <a name="about"></a>
     <div class="intro-header">
@@ -93,7 +92,7 @@
                             <a class="btn btn-default btn-lg"><i class="fa fa-file-o"></i></a>
                           </div>
                           <div class="btn-group" role="group">
-                            <a class="btn btn-info btn-lg" id="apkupload">Select and scan an Android apk file</a>
+                            <a class="btn btn-default btn-lg" id="apkupload">Select and Scan</a>
                           </div>
                           <div class="btn-group" role="group">
                             <a class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
@@ -182,9 +181,9 @@
             <div class="clearfix"></div>
             <h2 class="section-heading"><i class="fa fa-bomb"></i> Top  threats from app markets - stay alerted!</h2>
             <div class="row">
-                <div id="threats0" class="col-md-4"></div>
-                <div id="threats1" class="col-md-4"></div>
-                <div id="threats2" class="col-md-4"></div>
+                <div id="threats0" class="col-md-4 col-xs-12"></div>
+                <div id="threats1" class="col-md-4 col-xs-12"></div>
+                <div id="threats2" class="col-md-4 col-xs-12"></div>
             </div>
         </div>
         <!-- /.container -->
@@ -195,16 +194,17 @@
     <div class="content-section-a" id="headline">
         <div class="container">
             <div class="row">
-                <div class="col-lg-5 col-lg-offset-1 col-sm-push-6 col-sm-6">
+                <div class="col-lg-7 text-center">
+                    <div id="stats-tab" class="btn-group" role="group" aria-label="...">
+                    </div>
+                    <br>
+                    <canvas id="stats-chart" height="200" width="500"></canvas>
+                </div>
+                <div class="col-lg-5">
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
                     <h2 class="section-heading"><i class="fa fa-line-chart"></i> AppAudit daily new scans</h2>
                     <p class="lead">AppAudit operates a huge scan network that intercepts latest app threats and keeps our users protected.</p>
-                </div>
-                <div class="col-lg-5 col-sm-pull-6  col-sm-6 text-center">
-                    <div id="stats-tab" class="btn-group" role="group" aria-label="...">
-                    </div>
-                    <canvas id="stats-chart" height="200px" width="550px"></canvas>
                 </div>
             </div>
         </div>
@@ -339,7 +339,11 @@
                 $(this).addClass('btn-primary');
                 var ctx = $("#stats-chart").get(0).getContext("2d");
                 var data = $(this).data('chart');
-                var myLineChart = new Chart(ctx).Line(data);
+                var lastChart = $("#stats-chart").data('lastChart');
+                if (lastChart)
+                    lastChart.destroy();
+                lastChart = new Chart(ctx).Line(data);
+                $("#stats-chart").data('lastChart', lastChart);
             });
         }
         $('#stats-tab a:first').click();
@@ -416,7 +420,7 @@
                 if (ticking.length > 0) {
                     progress += ticking.pop();
                 } else {
-                    if (progress < 0.98) {
+                    if (progress < 0.99) {
                         progress += 0.01;
                     }
                 }
@@ -432,7 +436,6 @@
                         var o = $('#progress-bar > .progressbar-text');
                         o.html('<a href="javascript: generate_notification(\'' + psha1 +'\')">View Report</a>');
                         o.css('font-size', '2.5rem');
-                        // o.css('white-space', 'nowrap');
                         o.css('color', 'white');
                         o.css('top', '45%');
                     });
