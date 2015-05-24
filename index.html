@@ -26,7 +26,9 @@
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-61168812-1', 'auto');
+    ga('create', 'UA-61168812-1', {
+        'cookieDomain': 'api.appaudit.io'
+    });
     ga('send', 'pageview');
 
     </script>
@@ -300,7 +302,7 @@
     <script src="js/frontend.js"></script>
     <script src="js/sha1.js"></script>
     <script>
-    var server_prefix = "http://cpslab.cs.mcgill.ca:5902/";
+    var api_server = "http://api.appaudit.io:5902/api/";
     Array.prototype.shuffle = function() {
         for (var i = this.length - 1; i > 0; --i) {
             var j = Math.floor(Math.random() * (i+1));
@@ -312,13 +314,13 @@
     var render_examples = function(threats) {
         threats.shuffle();
         var tmpl = $.render.content_tmpl;
-        $.get(server_prefix+'api/report/show?sha1=' + threats[0], function (data) {
+        $.get(api_server+'report/show?sha1=' + threats[0], function (data) {
             renderData(data, $('#threats0'), tmpl);
         });
-        $.get(server_prefix+'api/report/show?sha1=' + threats[1], function (data) {
+        $.get(api_server+'report/show?sha1=' + threats[1], function (data) {
             renderData(data, $('#threats1'), tmpl);
         });
-        $.get(server_prefix+'api/report/show?sha1=' + threats[2], function (data) {
+        $.get(api_server+'report/show?sha1=' + threats[2], function (data) {
             renderData(data, $('#threats2'), tmpl);
         });
     }
@@ -352,7 +354,7 @@
         var fd = new FormData();
         fd.append('apk', f);
         $.ajax({
-            url: server_prefix+'api/upload',
+            url: api_server+'upload',
             type: 'POST',
             data: fd,
             processData: false,
@@ -374,7 +376,7 @@
         renderData(report, $('#upload-scan'), tmpl);
     }
     var generate_notification = function(psha1) {
-        $.get(server_prefix+'api/report/find?psha1=' + psha1, function (data) {
+        $.get(api_server+'report/find?psha1=' + psha1, function (data) {
             if ($('#noti-display').is(':checked')) {
                 popup_report(data);
             }
@@ -415,7 +417,7 @@
         }
         ticking.shuffle();
         var poll_progress = function() {
-            $.get(server_prefix+'api/report/progress?psha1=' + psha1, function (msg) {
+            $.get(api_server+'report/progress?psha1=' + psha1, function (msg) {
                 var psha1 = msg.psha1;
                 if (ticking.length > 0) {
                     progress += ticking.pop();
@@ -456,7 +458,7 @@
         reader.onloadend = function (e) {
             var content = e.target.result;
             var hash = sha1.hash(content);
-            $.get(server_prefix+'api/report/find?attempt=1&psha1=' + hash, function (data) {
+            $.get(api_server+'report/find?attempt=1&psha1=' + hash, function (data) {
                 if (JSON.stringify(data) !== '{}') {
                     popup_report(data);
                 } else {
@@ -479,7 +481,7 @@
         $.get('js/report-tmpl', function (tmplData) {
             // load_preferences();
             $.templates({content_tmpl: tmplData});
-            $.get(server_prefix+'api/stats', render_stats);
+            $.get(api_server+'stats', render_stats);
             $('#apkupload').click(function (e) {
                 $('input[id=apkpath]').click()
             });
