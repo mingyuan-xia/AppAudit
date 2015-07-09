@@ -312,13 +312,13 @@
     var render_examples = function(threats) {
         threats.shuffle();
         var tmpl = $.render.content_tmpl;
-        $.get(api_server+'report/show?sha1=' + threats[0], function (data) {
+        $.get(api_server+'report/show/' + threats[0], function (data) {
             renderData(data, $('#threats0'), tmpl);
         });
-        $.get(api_server+'report/show?sha1=' + threats[1], function (data) {
+        $.get(api_server+'report/show/' + threats[1], function (data) {
             renderData(data, $('#threats1'), tmpl);
         });
-        $.get(api_server+'report/show?sha1=' + threats[2], function (data) {
+        $.get(api_server+'report/show/' + threats[2], function (data) {
             renderData(data, $('#threats2'), tmpl);
         });
     }
