@@ -374,7 +374,9 @@
         renderData(report, $('#upload-scan'), tmpl);
     }
     var generate_notification = function(psha1) {
-        $.get(api_server+'report/find?psha1=' + psha1, function (data) {
+	// TODO better abstraction
+        $.get(api_server+'report/find/' + psha1, function (data) {
+            if ('not found' in data.status_msg) return ;
             if ($('#noti-display').is(':checked')) {
                 popup_report(data);
             }
@@ -415,7 +417,7 @@
         }
         ticking.shuffle();
         var poll_progress = function() {
-            $.get(api_server+'report/progress?psha1=' + psha1, function (msg) {
+            $.get(api_server+'report/find/' + psha1, function (msg) {
                 var psha1 = msg.psha1;
                 if (ticking.length > 0) {
                     progress += ticking.pop();
@@ -427,9 +429,7 @@
                 progress_bar.animate(progress, {
                     easing: "easeInOutQuad"
                 });
-                if (msg.progress < 100) {
-                    setTimeout(poll_progress, 1000);
-                } else {
+                if ('scanned' in msg.status_msg) {
                     progress_bar.animate(1, {
                         easing: "easeInOutQuad"
                     }, function() {
@@ -440,6 +440,8 @@
                         o.css('top', '45%');
                     });
                     generate_notification(psha1);
+                } else {
+                    setTimeout(poll_progress, 1000);
                 }
             });
         }
@@ -456,8 +458,8 @@
         reader.onloadend = function (e) {
             var content = e.target.result;
             var hash = sha1.hash(content);
-            $.get(api_server+'report/find?attempt=1&psha1=' + hash, function (data) {
-                if (JSON.stringify(data) !== '{}') {
+            $.get(api_server + 'report/find/' + hash + '?attempt=1', function (data) {
+                if ('scanned' in data.status_msg) {
                     popup_report(data);
                 } else {
                     track_progress(hash);
