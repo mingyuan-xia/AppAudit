@@ -64,7 +64,7 @@
             $.templates({content_tmpl: tmplData});
             pstr = get_param_str();
             if ('sha1' in pstr) {
-            	get_report(pstr['sha1'], render_report);
+            	show_report(pstr['sha1'], render_report);
             	return;
             }
             if ('psha1' in pstr) {
