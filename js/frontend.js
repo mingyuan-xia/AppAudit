@@ -4,13 +4,13 @@ function renderData(data, root, renderer) {
     root.text('invalid report data');
     return ;
   }
-  if ('not found' in data.status_msg) {
+  if (data.status_msg.indexOf('not found') > -1) {
     root.text('report is not found');
   }
-  if ('scanning' in data.status_msg) {
+  if (data.status_msg.indexOf('scanning') > -1) {
     root.text('report is being generated');
   }
-  if ('scanned' in data.status_msg) {
+  if (data.status_msg.indexOf('scanned') > -1) {
     root.html(renderer(data));
     $('[data-toggle="tooltip"]').tooltip(); 
   }
