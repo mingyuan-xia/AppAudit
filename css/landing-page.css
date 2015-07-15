@@ -27,13 +27,13 @@ h6 {
     font-weight: bold;
 }
 
-.navbar > img {
+.navbar-brand > img {
     padding: 5px;
     height: 100%;
     display: inherit;
 }
 
-.navbar {
+.navbar-brand {
     padding: 5px 5px;
 }
 
