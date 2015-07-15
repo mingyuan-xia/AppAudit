@@ -27,6 +27,16 @@ h6 {
     font-weight: bold;
 }
 
+.logo {
+    padding: 5px;
+    height: 100%;
+    display: inherit;
+}
+
+.navbar {
+    padding: 5px 5px;
+}
+
 .lead {
     font-size: 18px;
     font-weight: 400;
