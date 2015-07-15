@@ -1,7 +1,11 @@
 <div class="report">
   <div class="row">
     <div class="col-md-4 col-xs-4">
+      {{if icon_img}}
       <img class="img-responsive" src="{{:icon_img}}" />
+      {{else}}
+      <div class="rubber_stamp">unofficial</div>
+      {{/if}}
       <p></p>
       <div class="text-center">
         {{for tags}}
