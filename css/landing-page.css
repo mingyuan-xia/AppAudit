@@ -27,7 +27,7 @@ h6 {
     font-weight: bold;
 }
 
-.logo {
+.navbar > img {
     padding: 5px;
     height: 100%;
     display: inherit;
