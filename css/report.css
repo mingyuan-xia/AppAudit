@@ -56,23 +56,21 @@
 }
 
 .rubber_stamp {
-	font-family: 'Vollkorn', serif;
-	font-size: 39px;
+	font-size: 1.5rem;
 	line-height: 45px;
 	text-transform: uppercase;
 	font-weight: bold;
 	color: red;
 	border: 7px solid red;
 	float: left;
-	padding: 10px 7px;
+	padding: 2px 7px;
 	border-radius: 10px;
-
+	margin: 1.5rem 0;
 	opacity: 0.8;
 	-webkit-transform: rotate(-10deg);
 	-o-transform: rotate(-10deg);
 	-moz-transform: rotate(-10deg);
 	-ms-transform: rotate(-10deg);
-	position:absolute;
 	top:32%;
 }
 
@@ -85,5 +83,5 @@
 	top: -10px;
 	left: -10px;
 	padding: 10px;
-	background: url(img/noise.png) repeat;
+	background: url(../img/noise.png) repeat;
 }
