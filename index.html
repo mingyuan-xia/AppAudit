@@ -378,7 +378,7 @@
     var generate_notification = function(psha1) {
 	// TODO better abstraction
         find_report(psha1, function (data) {
-            if ('not found' in data.status_msg) return ;
+            if (data.status_msg.indexOf('not found') != -1) return ;
             if ($('#noti-display').is(':checked')) {
                 popup_report(data);
             }
@@ -431,7 +431,7 @@
                 progress_bar.animate(progress, {
                     easing: "easeInOutQuad"
                 });
-                if ('scanned' in msg.status_msg) {
+                if (msg.status_msg.indexOf('scanned') != -1) {
                     progress_bar.animate(1, {
                         easing: "easeInOutQuad"
                     }, function() {
@@ -461,7 +461,7 @@
             var content = e.target.result;
             var hash = sha1.hash(content);
             find_report(hash, function (data) {
-                if ('scanned' in data.status_msg) {
+                if (data.status_msg.indexOf('scanned') != -1) {
                     popup_report(data);
                 } else {
                     track_progress(hash);
