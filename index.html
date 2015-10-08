@@ -10,13 +10,13 @@
     <meta name="author" content="">
 
     <title>AppAudit</title>
-    <link href="dependencies/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/landing-page.css" rel="stylesheet">
     <link href="css/report.css" rel="stylesheet">
     <link href="css/myshape.css" rel="stylesheet">
     <link href="css/bs-callout.css" rel="stylesheet">
-    <link href="dependencies/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="dependencies/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet" type="text/css">
+    <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="bower_components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
     <!-- Google Analytics -->
@@ -92,10 +92,10 @@
                         <input type="file" id="apkpath" class="hidden">
                         <div class="btn-group btn-group-lg">
                           <div class="btn-group" role="group">
-                            <a class="btn btn-default btn-lg"><i class="fa fa-file-o"></i></a>
+                            <a class="btn btn-default btn-lg"><i id="widget-icon" class="fa fa-file-o"></i></a>
                           </div>
                           <div class="btn-group" role="group">
-                            <a class="btn btn-default btn-lg" id="apkupload">Select and Scan</a>
+                            <a class="btn btn-default btn-lg" id="widget-btn">Select and Scan</a>
                           </div>
                           <div class="btn-group" role="group">
                             <a class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
@@ -104,37 +104,6 @@
                             </ul>
                           </div>
                         </div><!-- /btn-group -->
-                        <br>
-                        <div class="row text-center" id="upload-details">
-                            <div id="noti-opts" class="col-lg-3 text-left col-lg-offset-4">
-                                <h4>Notification options:</h4>
-                                <div class="checkbox">
-                                    <input type="checkbox" id="noti-display" checked>
-                                    <label for="noti-display">
-                                        <i class="fa fa-eye"></i> Display on the page
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <input type="checkbox" id="noti-email">
-                                    <label for="noti-email">
-                                        <i class="fa fa-envelope-o"></i> Email me when it is finished
-                                    </label>
-                                </div>
-                                <div class="input-group">
-                                  <input type="text" class="form-control" placeholder="Email address" id="noti-email-text">
-                                  <span class="input-group-btn">
-                                    <a class="btn btn-primary">Ok!</a>
-                                  </span>
-                                </div><!-- /input-group -->
-                                <div class="checkbox">
-                                    <input type="checkbox" id="noti-desktop-noti">
-                                    <label for="noti-desktop-noti">
-                                        <i class="fa fa-bell"></i> Desktop notification
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-lg-2" id="progress-bar"></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -226,7 +195,6 @@
                 </div>
                 <div class="col-lg-5 col-lg-offset-1 col-sm-6 text-center">
                     <img class="img-responsive" src="img/phone.png" />
-                    <img id="myarrow" src="img/arrow.png" />
                 </div>
             </div>
         </div>
@@ -291,13 +259,11 @@
         </div>
     </footer>
 
-    <script src="dependencies/jquery/dist/jquery.min.js"></script>
-    <script src="dependencies/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="dependencies/Chart.js/Chart.min.js"></script>
-    <script src="dependencies/jsrender/jsrender.min.js"></script>
-    <script src="dependencies/notify/notification.js"></script>
-    <script src="dependencies/jquery.cookie/jquery.cookie.js"></script>
-    <script src="dependencies/progressbar.js/dist/progressbar.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/Chart.js/Chart.min.js"></script>
+    <script src="bower_components/jsrender/jsrender.min.js"></script>
+    <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
     <script src="js/desktop-notify-min.js"></script>
     <script src="js/frontend.js"></script>
     <script src="js/sha1.js"></script>
@@ -350,9 +316,18 @@
         }
         $('#stats-tab a:first').click();
     }
+    var set_widget_state = function(icon, text, allow_click) {
+        $('#widget-icon').attr('class', icon);
+        $('#widget-btn').html(text);
+        $('#widget-btn').attr("disabled", !allow_click);
+    }
+    var reset_widget_state = function () {
+        set_widget_state('fa fa-file-o', 'Select and Scan', true)
+    }
     var upload_file = function (f) {
         var fd = new FormData();
         fd.append('apk', f);
+        set_widget_state('fa fa-spinner fa-pulse', 'Uploading...', false);
         $.ajax({
             url: api_server+'upload',
             type: 'POST',
@@ -360,10 +335,16 @@
             processData: false,
             contentType: false,
             success: function (res) {
+                set_widget_state('fa fa-check', 'Upload succeeded', false);
+                setTimeout(function() {
+                    set_widget_state('fa fa-cog fa-spin', 'Analyzing...', false);
+                }, 2000);
                 console.log('upload success');
                 console.log(res);
             },
             error: function (jqXHR, textStatus, err) {
+                set_widget_state('fa fa-close', 'Upload failed', false);
+                setTimeout(reset_widget_state, 2000);
                 console.log('upload failed');
                 console.log(err);
             }
@@ -375,81 +356,19 @@
         $('#upload-scan').empty();
         renderData(report, $('#upload-scan'), tmpl);
     }
-    var generate_notification = function(psha1) {
-	// TODO better abstraction
-        find_report(psha1, function (data) {
-            if (data.status_msg.indexOf('not found') != -1) return ;
-            if ($('#noti-display').is(':checked')) {
-                popup_report(data);
-            }
-            // email notification will be taken care of by the server
-            if ($('#noti-desktop-noti').is(':checked')) {
-                n = new Notification("Scan report ready", {
-                    body: "" // TODO
-                });
-            }
-        });
-    }
     var track_progress = function(psha1) {
-        $('#progress-bar').empty();
-        var progress_bar = new ProgressBar.Circle('#progress-bar', {
-            color: '#99CCFF',
-            strokeWidth: 5,
-            trailWidth: 3,
-            duration: 900,
-            text: {
-                value: '0%'
-            },
-            step: function(state, bar) {
-                bar.setText((bar.value() * 100).toFixed(0) + '%');
-            }
-        });
-        var get_noti_opts = function(psha1) {
-            var noti = {psha1: psha1};
-            if ($('#noti-email').is(':checked')) {
-                noti.email = $('#noti-email-text').val();
-            }
-            return noti;
-        }
-        var progress = 0;
-        var ticking = [];
-        for (var i = 0; i < 15; ++i) {
-            // 0.4*e^(-0.15x-1)
-            ticking[i] = 0.4 * Math.exp(-0.15*(i+1)-1);
-        }
-        ticking.shuffle();
         var poll_progress = function() {
             find_report(psha1, function (msg) {
                 var psha1 = msg.psha1;
-                if (ticking.length > 0) {
-                    progress += ticking.pop();
-                } else {
-                    if (progress < 0.99) {
-                        progress += 0.01;
-                    }
-                }
-                progress_bar.animate(progress, {
-                    easing: "easeInOutQuad"
-                });
                 if (msg.status_msg.indexOf('scanned') != -1) {
-                    progress_bar.animate(1, {
-                        easing: "easeInOutQuad"
-                    }, function() {
-                        var o = $('#progress-bar > .progressbar-text');
-                        o.html('<a href="javascript: generate_notification(\'' + psha1 +'\')">View Report</a>');
-                        o.css('font-size', '2.5rem');
-                        o.css('color', 'white');
-                        o.css('top', '45%');
-                    });
-                    generate_notification(psha1);
+                    popup_report(msg);
+                    reset_widget_state();
                 } else {
-                    setTimeout(poll_progress, 1000);
+                    setTimeout(poll_progress, 1500);
                 }
             });
         }
         poll_progress();
-        $('#upload-details').css('visibility', 'visible');
-        $('#noti-opts').css('visibility', 'hidden');
     }
     var query_file = function() {
         var rawf = document.getElementById('apkpath').files[0];
@@ -471,51 +390,16 @@
         }
         reader.readAsArrayBuffer(f);
     }
-    var load_preferences = function() {
-        // load notification options
-        var n = $.cookie('noti');
-        if ('emailaddr' in n) $('#noti-email-text').val(n.emailaddr);
-        if ('display' in n) $('#noti-display').val(n['display']);
-        if ('email' in n) $('#noti-email').val(n['email']);
-        if ('desktop' in n) $('#noti-desktop-noti').val(n['desktop']);
-    }
     $(document).ready(function() {
         $.get('js/report-tmpl', function (tmplData) {
             // load_preferences();
             $.templates({content_tmpl: tmplData});
             get_stats(render_stats);
-            $('#apkupload').click(function (e) {
+            $('#widget-btn').click(function (e) {
                 $('input[id=apkpath]').click()
             });
             $('input[id=apkpath]').change(query_file);
-            $('#noti-email').change(function (e) {
-                var b = $(this).is(':checked');
-                $('#noti-email-text').prop('readonly', !b);
-            });
-            $('#noti-desktop-noti').change(function (e) {
-                if ($(this).is(':checked')) {
-                    // request desktop notification permission
-                    if (Notification.permission !== 'granted') {
-                        Notification.requestPermission();
-                    }
-                }
-            });
         });
-        $("#myarrow").hide();
-        /*
-        var animate1 = function() {
-            $("#myarrow").animate({
-                left: "+=40",
-                top: "+=10"
-            }, 1000, function() {
-                $("#myarrow").animate({
-                    left: "-=40",
-                    top: "-=10"
-                }, 300, animate1);
-            });
-        }
-        animate1();
-        */
     });
     </script>
 </body>
