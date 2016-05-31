@@ -359,7 +359,7 @@
             console.log('tracking ' + psha1);
             find_report(psha1, function (msg) {
                 console.log(msg);
-                if (msg.status_msg.indexOf('scanned') != -1) {
+                if ('status_msg' in msg && msg.status_msg.indexOf('scanned') != -1) {
                     popup_report(msg);
                     reset_widget_state();
                 } else {
