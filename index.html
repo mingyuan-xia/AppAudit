@@ -357,15 +357,17 @@
     }
     var track_progress = function(psha1) {
         var poll_progress = function() {
-            find_report(psha1, function (msg) {
+	    var roller = this;
+            find_report(this.psha1, function (msg) {
                 if (msg.status_msg.indexOf('scanned') != -1) {
                     popup_report(msg);
                     reset_widget_state();
                 } else {
-                    setTimeout(poll_progress, 1500);
+                    setTimeout(roller, 1500);
                 }
             });
         }
+	poll_progress.psha1 = psha1
         poll_progress();
     }
     var query_file = function() {
@@ -390,7 +392,6 @@
     }
     $(document).ready(function() {
         $.get('js/report-tmpl', function (tmplData) {
-            // load_preferences();
             $.templates({content_tmpl: tmplData});
             get_stats(render_stats);
             $('#widget-btn').click(function (e) {
