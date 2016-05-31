@@ -338,8 +338,7 @@
                 setTimeout(function() {
                     set_widget_state('fa fa-cog fa-spin', 'Analyzing...', false);
                 }, 2000);
-                console.log('upload success');
-                console.log(res);
+                console.log('upload success, res:' + res);
             },
             error: function (jqXHR, textStatus, err) {
                 set_widget_state('fa fa-close', 'Upload failed', false);
@@ -363,6 +362,7 @@
                     popup_report(msg);
                     reset_widget_state();
                 } else {
+                    console.log('not found, continue tracking');
                     setTimeout(poll_progress, 1500);
                 }
             });
