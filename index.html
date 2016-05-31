@@ -359,6 +359,7 @@
         var poll_progress = function() {
             find_report(psha1, function (msg) {
                 var psha1 = msg.psha1;
+                console.log('polling ' + psha1);
                 if (msg.status_msg.indexOf('scanned') != -1) {
                     popup_report(msg);
                     reset_widget_state();
